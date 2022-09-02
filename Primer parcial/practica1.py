@@ -7,7 +7,7 @@ def productoTotal(*numeros):
         res = res * i
     return res
 
-assert productoTotal(1,2,3) == 3
+assert productoTotal(1,2,3) == 6
 assert productoTotal(1,2,3,0) == 0
 
 
