@@ -33,8 +33,15 @@ class Usuario:
     def contrasena(self):
         return self._contrasena
     
+    @property
+    def username(self):
+        return self._username
+    
     # Setters
 
+    @username.setter
+    def username(self, username):
+        self._username = username
         
     @nombre.setter
     def nombre(self, nombre):
