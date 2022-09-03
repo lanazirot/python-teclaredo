@@ -1,8 +1,6 @@
 from practica8_1 import Usuario
 import os
 
-administrador = Usuario('Administrador', 'administrador', 'ADMIN001HTSXRLA3', 'Laredo', 'Administrador')
-
 listaUsuarios = {}
 
 def registrarUsuario():
@@ -30,12 +28,17 @@ def iniciarSesion():
     if username in listaUsuarios:
         usuario = listaUsuarios[username]
         if usuario.contrasena == password:
-            currentUser = listaUsuarios[username]
-            if currentUser.rol == 'Administrador':
+            if usuario.rol == 'Administrador':
                 print('----------------Lista de usuarios----------------')
-                print(listaUsuarios)
+                print ("{:<25} {:<25} {:<25} {:<25} {:<25}".format('Username','Nombre','CURP','Rol', 'Ciudad'))
+                for user in listaUsuarios:
+                    data = listaUsuarios[user]
+                    print ("{:<25} {:<25} {:<25} {:<25} {:<25}".format(data.username, data.nombre, data.curp, data.rol, data.ciudad))
+                menu()
             else:
-                print(currentUser)
+                print('----------------Datos de tu usuario----------------')
+                print(usuario)
+                menu()
         else:
             print("Datos incorrectos")
             menu()
@@ -45,10 +48,8 @@ def iniciarSesion():
     
 
 def menu():
-    os.system('cls')
-    opcion = int(input('1.- Registro\n2.- Inicio de sesion\n3.- Salida'))
+    opcion = int(input('1.- Registro\n2.- Inicio de sesion\n3.- Salida\n'))
     if opcion not in [1,2,3]:
-        print('Opcion invalida, ingrese una opcion del 1 al 3')
         menu()
     else:
         if opcion == 1:
@@ -63,5 +64,7 @@ def menu():
     
 
 if __name__ == '__main__':
+    administrador = Usuario('admin', '123', 'Administrador', 'ADMIN001HTSXRLA3', 'Laredo', 'Administrador')
     listaUsuarios[administrador.username] = administrador
     menu()
+    

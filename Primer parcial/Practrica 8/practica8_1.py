@@ -9,7 +9,7 @@ class Usuario:
 
 
     def __str__(self):
-        return f"({self.username}) ({self.rol}) ({self.nombre}) ({self.curp}) ({self.ciudad})"
+        return f"Username: {self.username} Rol: {self.rol} Nombre: {self.nombre}  CURP: {self.curp} Ciudad: {self.ciudad}"
     
     # Getters 
   
