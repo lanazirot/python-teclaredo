@@ -33,17 +33,17 @@ def iniciarSesion():
                 print ("{:<25} {:<25} {:<25} {:<25} {:<25}".format('Username','Nombre','CURP','Rol', 'Ciudad'))
                 for user in listaUsuarios:
                     data = listaUsuarios[user]
-                    print ("{:<25} {:<25} {:<25} {:<25} {:<25}".format(data.username, data.nombre, data.curp, data.rol, data.ciudad))
+                    print ("{:<25} {:<25} {:<25} {:<25} {:<25}".format(data.username, data.nombre, data.curp, data.rol, data.ciudad), end='\n')
                 menu()
             else:
                 print('----------------Datos de tu usuario----------------')
-                print(usuario)
+                print(usuario,end='\n')
                 menu()
         else:
-            print("Datos incorrectos")
+            print("Datos incorrectos", end = '\n')
             menu()
     else:
-        print("Cuenta inexistente")
+        print("Cuenta inexistente", end='\n')
         menu()
     
 
