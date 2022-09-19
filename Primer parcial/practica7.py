@@ -14,4 +14,4 @@
 """
 from datetime import date
 opcion = int(input('1.- Imprimir YYYY/MM/DD\n2.- Imprimir MM/DD/YYYY\n'))
-print(date.today().strftime("%d/%m/%y" if opcion == 1 else "%m/%d/%y"))
+print(date.today().strftime("%Y/%m/%d" if opcion == 1 else "%m/%d/%Y"))
