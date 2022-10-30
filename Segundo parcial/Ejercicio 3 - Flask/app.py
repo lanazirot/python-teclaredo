@@ -40,26 +40,33 @@ csrf.init_app(app)
 # Secret key
 app.config['SECRET_KEY'] = "$db8384jndkJS38EXXUDE8RHDl"
 
-## Middleware para revisar la sesion ##
-
 ## Rutas de sesion ##
+
+@app.before_request
+def middleware():
+    login_url = url_for('login')
+    if request.path == login_url:
+        return
+    elif not session.get('logged_in', False):
+        return redirect(login_url)
+    
 
 @app.route("/", methods=['GET', 'POST'])
 @app.route("/login", methods=['GET', 'POST'])
 def login():
-    session.pop('_flashes', None)
+    if session.get('logged_in', False):
+        return redirect(url_for('inicio'))
     loginForm = LoginForm()
     if loginForm.validate_on_submit():
         username = loginForm.username.data
         password = loginForm.password.data
-        user = User(password='123', username='lana')
+        user = User.query.filter_by(username=username).first()
         if not user:
-            flash('Usuario no encontrado')
             return redirect(url_for('login'))
         if user.password == password:
+            session['logged_in'] = True
             return redirect(url_for('inicio'))
         else:
-            flash('Datos incorrectos')
             return redirect(url_for('login'))
         
     return render_template('/login/login.html',form=loginForm)
@@ -68,7 +75,7 @@ def login():
 @app.route('/logout')
 def logout():
     if session:
-        session.pop('username')
+        session.pop('logged_in')
     return redirect(url_for('login'))
 ## Fin rutas de sesion ##
 
