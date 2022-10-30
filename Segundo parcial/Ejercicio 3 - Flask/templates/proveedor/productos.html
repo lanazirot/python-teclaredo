@@ -1,8 +1,7 @@
 {% extends './base.html' %}
 {% block content %}
-    <h1 class="display-1 d-flex justify-content-center">Productos del proveedor {{ proveedor.razonSocial }}</h1>
+    <h1 class="display-1 d-flex justify-content-center">Productos del proveedor {{proveedor.razonSocial}}  <a style="margin-left: 1rem;" href="javascript:history.back()"><i class="bi bi-arrow-left-circle-fill" style="font-size: 0.6em ;"></i></a></h1>
     <br>
-
     <table class="table">
         <thead class="thead-dark">
             <tr>

@@ -5,10 +5,14 @@ from flask_migrate import Migrate
 from flask_bootstrap import Bootstrap5
 from models import Producto, Proveedor, User
 from forms import LoginForm, ProveedorForm, ProductoForm, UserForm
+from flask_wtf.csrf import CSRFProtect
+
 app = Flask(__name__)
 bootstrap = Bootstrap5(app)
 
 logging.basicConfig(filename='tienda_logger.log', level=logging.DEBUG)
+
+
 
 # Configurar la db
 USER_DB = 'postgres'
@@ -30,16 +34,15 @@ db.init_app(app)
 migrate = Migrate()
 migrate.init_app(app, db)
 
+csrf = CSRFProtect()
+csrf.init_app(app)
 
 # Secret key
 app.config['SECRET_KEY'] = "$db8384jndkJS38EXXUDE8RHDl"
 
 ## Middleware para revisar la sesion ##
 
-
-
 ## Rutas de sesion ##
-
 
 @app.route("/", methods=['GET', 'POST'])
 @app.route("/login", methods=['GET', 'POST'])
@@ -119,8 +122,29 @@ def eliminarProveedor(id):
 ## Rutas de usuarios TODO: Hacer con peticiones HTTP (JSON) ##
 @app.route("/usuarios")
 def usuarios():
-    return render_template('/user/index.html')
+    usuarios = User.query.all()
+    return render_template('/user/index.html', usuarios=usuarios)
 
+@app.route("/usuarios/agregar", methods=['GET', 'POST'])
+def agregarUsuario():
+    if request.method == 'POST':
+        data = request.form
+        # Obteniendo los datos de la peticion HTTP
+        user = User(username=data['username'], password=data['password'], nombre=data['nombre'], email=data['email'], rol=data['rol'])
+        userForm = UserForm(obj=user)
+        if userForm.validate():
+            db.session.add(user)
+            db.session.commit()
+            
+        return redirect(url_for('usuarios'))
+    return render_template('/user/agregar.html')
+
+@app.route("/usuarios/<int:id>/eliminar")
+def eliminarUsuario(id):
+    usuario = User.query.get_or_404(id)
+    db.session.delete(usuario)
+    db.session.commit()
+    return redirect(url_for('usuarios'))
 
 # ## Fin rutas de usuarios ##
 

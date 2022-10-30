@@ -1,0 +1,33 @@
+{% extends './base.html' %}
+{% block content %}
+    <h1 class="display-1 d-flex justify-content-center">Usuarios <a style="margin-left: 1rem;" href="{{ url_for('agregarUsuario') }}"><i class="bi bi-plus-circle-fill" style="font-size: 0.6em ;"></i></a></h1>
+    <br>
+
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Username</th>
+                <th scope="col">Email</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Rol</th>
+                <th scope="col">Editar</th>
+                <th scope="col">Eliminar</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for usuario in usuarios %}
+            <tr>
+                <th scope="row">{{usuario.id}}</th>
+                <td>{{usuario.username}}</td>
+                <td>{{usuario.email}}</td>
+                <td>{{usuario.nombre}}</td>
+                <td>{{usuario.rol}}</td>
+                <td><a href="usuario/{{usuario.id}}/editar">Editar</a></td>
+                <td><a href="usuario/{{usuario.id}}/eliminar">Eliminar</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
