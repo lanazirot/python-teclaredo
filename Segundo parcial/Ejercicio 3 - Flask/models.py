@@ -1,4 +1,4 @@
-from main import db
+from app import db
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -6,6 +6,7 @@ class User(db.Model):
     email = db.Column(db.String(50))
     nombre = db.Column(db.String(255), nullable=False)
     rol = db.Column(db.String(255), nullable=False)
+    password = db.Column(db.String(255), nullable=False)
 
 class Proveedor(db.Model):
     id = db.Column(db.Integer, primary_key=True)
