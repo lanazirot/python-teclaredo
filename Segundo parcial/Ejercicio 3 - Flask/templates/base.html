@@ -5,12 +5,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Bootstrap-Flask Demo Application</title>
+    <title>Tienda</title>
     <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
     {{ bootstrap.load_css() }}
     <style>
         pre {
-            background: #ddd;
+            background: rgb(202, 214, 214);
             padding: 10px;
         }
         h2 {
@@ -22,7 +22,7 @@
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
         <div class="container">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,17 +30,10 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                {{ render_nav_item('index', 'Home') }}
-                {{ render_nav_item('test_form', 'Form') }}
-                {{ render_nav_item('test_nav', 'Nav') }}
-                {{ render_nav_item('test_pagination', 'Pagination') }}
-                {{ render_nav_item('test_flash', 'Flash Messages') }}
-                {{ render_nav_item('test_table', 'Table') }}
-                {{ render_nav_item('test_icon', 'Icon') }}
-                {{ render_nav_item('test_icons', 'Icons') }}
-                <li class="nav-item"><a class="nav-link" href="https://bootstrap-flask.readthedocs.io/" target="_blank">Documentation</a></li>
-                <li class="nav-item"><a class="nav-link" href="https://getbootstrap.com/docs/5.1/getting-started/introduction/" target="_blank">Bootstrap Documentation</a></li>
-                <li class="nav-item"><a class="nav-link" href="https://github.com/helloflask/bootstrap-flask" target="_blank">GitHub</a></li>
+                {{ render_nav_item('inicio', 'Inicio') }}
+                {{ render_nav_item('proveedores', 'Proveedores') }}
+                {{ render_nav_item('productos', 'Productos') }}
+                {{ render_nav_item('usuarios', 'Usuarios') }}
             </ul>
         </div>
         </div>
@@ -53,11 +46,9 @@
 
     <footer class="text-center">
         {% block footer %}
-            <small> &copy; 2018–<script>document.write(new Date().getFullYear())</script> <a href="https://github.com/greyli">Grey Li</a>
-            </small>
+            <small> &copy; 2022</small>
         {% endblock %}
     </footer>
-
     {{ bootstrap.load_js() }}
 </body>
 </html>

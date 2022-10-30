@@ -1,0 +1,25 @@
+{% extends './base.html' %}
+{% block content %}
+    <h1 class="display-1 d-flex justify-content-center">Productos del proveedor {{ proveedor.razonSocial }}</h1>
+    <br>
+
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Descripcion</th>
+                <th scope="col">Precio</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for producto in proveedor.productos %}
+            <tr>
+                <th scope="row">{{producto.id}}</th>
+                <td>{{producto.descripcion}}</td>
+                <td>{{producto.precio}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

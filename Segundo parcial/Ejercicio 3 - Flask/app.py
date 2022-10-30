@@ -46,6 +46,7 @@ app.config['SECRET_KEY'] = "$db8384jndkJS38EXXUDE8RHDl"
 @app.route("/login.html", methods=['GET', 'POST'])
 @app.route("/login.html", methods=['GET', 'POST'])
 def login():
+    session.pop('_flashes', None)
     loginForm = LoginForm()
     if loginForm.validate_on_submit():
         username = loginForm.username.data
@@ -71,23 +72,39 @@ def logout():
 ## Fin rutas de sesion ##
 
 
-# ## Rutas de proveedores ##
-# @app.route("/proveedores")
-# @app.route("/proveedores.html")
-# def proveedores():
-#     return render_template('/proveedor/index.html')
+## Rutas de proveedores ##
+@app.route("/proveedores")
+@app.route("/proveedores.html")
+def proveedores():
+    proveedores = Proveedor.query.all()
+    return render_template('/proveedor/index.html', proveedores=proveedores)
+
+@app.route("/proveedores/<int:id>/productos")
+def productosProveedor(id):
+    proveedor = Proveedor.query.get_or_404(id)
+    return render_template('/proveedor/productos.html', proveedor=proveedor)
 
 
 # ## Fin rutas proveedores ##
 
-# ## Rutas de usuarios ##
-# @app.route("/usuarios")
-# @app.route("/usuarios.html")
-# def proveedores():
-#     return render_template('/user/index.html')
+## Rutas de usuarios ##
+@app.route("/usuarios")
+@app.route("/usuarios.html")
+def usuarios():
+    return render_template('/user/index.html')
 
 
 # ## Fin rutas de usuarios ##
+
+## Rutas de productos ##
+@app.route("/productos")
+@app.route("/productos.html")
+def productos():
+    return render_template('/producto/index.html')
+
+
+# ## Fin rutas de usuarios ##
+
 
 ## Rutas default ##
 @app.route("/inicio")
