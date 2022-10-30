@@ -139,6 +139,20 @@ def agregarUsuario():
         return redirect(url_for('usuarios'))
     return render_template('/user/agregar.html')
 
+@app.route("/usuarios/<int:id>/editar", methods=['GET', 'POST'])
+def editarUsuario(id):
+    user = User.query.get_or_404(id)
+    if request.method == 'POST':
+        data = request.form
+        # Obteniendo los datos de la peticion HTTP
+        user.username = data['username']
+        user.nombre = data['nombre']
+        user.email = data['email']
+        user.rol = data['rol']
+        db.session.commit()
+        return redirect(url_for('usuarios'))
+    return render_template('/user/edit.html', usuario = user )
+
 @app.route("/usuarios/<int:id>/eliminar")
 def eliminarUsuario(id):
     usuario = User.query.get_or_404(id)
