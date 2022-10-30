@@ -133,7 +133,7 @@ def productos():
 
 @app.route("/productos/agregar", methods=['GET', 'POST'])
 def agregarProducto():
-    producto = Proveedor()
+    producto = Producto()
     productoForm = ProductoForm(obj=producto)
     if request.method == 'POST':
         if productoForm.validate_on_submit():
