@@ -13,12 +13,14 @@ class Proveedor(db.Model):
     razonSocial = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(50))
     direccion =  db.Column(db.String(255))
-    productos = db.relationship("Producto", backref='proveedor')
+    productos = db.relationship("Producto", backref='proveedor', cascade="all,delete")
+    
+    def __repr__(self):
+        return self.razonSocial
     
 class Producto(db.Model):
      id = db.Column(db.Integer, primary_key=True)
      descripcion = db.Column(db.String(300), nullable=False)
      precio = db.Column(db.Float, nullable=False)
      id_proveedor = db.Column(db.Integer, db.ForeignKey('proveedor.id'))
-     
 

@@ -1,0 +1,11 @@
+{% extends './base.html' %}
+{% from 'bootstrap5/form.html' import render_form %}
+{% block content %}
+    <h1 class="display-1 d-flex justify-content-center">Editar producto</h1>
+
+    <form method="post">
+        {{ forma.csrf_token }}
+        {{ render_form(forma, button_style='success', button_size='block') }}
+    </form>
+
+{% endblock %}

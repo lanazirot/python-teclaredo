@@ -1,6 +1,6 @@
 {% extends './base.html' %}
 {% block content %}
-    <h1 class="display-1 d-flex justify-content-center">Proveedores</h1>
+    <h1 class="display-1 d-flex justify-content-center">Proveedores <a style="margin-left: 1rem;" href="{{ url_for('agregarProveedor') }}"><i class="bi bi-plus-circle-fill" style="font-size: 0.6em ;"></i></a></h1>
     <br>
 
     <table class="table">
@@ -23,8 +23,8 @@
                 <td>{{proveedor.email}}</td>
                 <td>{{proveedor.direccion}}</td>
                 <td><a href="proveedores/{{proveedor.id}}/productos">Productos</a></td>
-                <td><a href="editar/{{proveedor.id}}">Editar</a></td>
-                <td><a href="eliminar/{{proveedor.id}}">Eliminar</a></td>
+                <td><a href="proveedores/{{proveedor.id}}/editar">Editar</a></td>
+                <td><a href="proveedores/{{proveedor.id}}/eliminar">Eliminar</a></td>
             </tr>
             {% endfor %}
         </tbody>

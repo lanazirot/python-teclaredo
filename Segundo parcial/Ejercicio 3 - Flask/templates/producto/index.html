@@ -1,4 +1,31 @@
 {% extends './base.html' %}
 {% block content %}
-    <h1>Productos!</h1>
+    <h1 class="display-1 d-flex justify-content-center">Productos <a href="{{ url_for('agregarProducto') }}"><i class="bi bi-plus-circle-fill" style="font-size: 0.6em ;"></i></a></h1>
+    <br>
+
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Descripcion</th>
+                <th scope="col">Precio (USD)</th>
+                <th scope="col">Proveedor</th>
+                <th scope="col">Editar</th>
+                <th scope="col">Eliminar</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for producto in productos %}
+            <tr>
+                <th scope="row">{{producto.id}}</th>
+                <td>{{producto.descripcion}}</td>
+                <td>{{producto.precio}}</td>
+                <td><a href="proveedores/{{producto.proveedor.id}}/productos">{{producto.proveedor}}</a></td>
+                <td><a href="producto/{{producto.id}}/editar">Editar</a></td>
+                <td><a href="producto/{{producto.id}}/eliminar">Eliminar</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
 {% endblock %}
