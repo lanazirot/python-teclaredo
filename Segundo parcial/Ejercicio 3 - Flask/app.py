@@ -126,7 +126,7 @@ def eliminarProveedor(id):
 
 # ## Fin rutas proveedores ##
 
-## Rutas de usuarios TODO: Hacer con peticiones HTTP (JSON) ##
+## Rutas de usuarios TODO: Hacer con peticiones HTTP  ##
 @app.route("/usuarios")
 def usuarios():
     usuarios = User.query.all()
