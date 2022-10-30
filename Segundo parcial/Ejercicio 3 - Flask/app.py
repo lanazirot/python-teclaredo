@@ -4,7 +4,7 @@ from database import db
 from flask_migrate import Migrate
 from flask_bootstrap import Bootstrap5
 from models import Producto, Proveedor, User
-from forms import LoginForm
+from forms import LoginForm, ProveedorForm, ProductoForm, UserForm
 app = Flask(__name__)
 bootstrap = Bootstrap5(app)
 
@@ -43,8 +43,6 @@ app.config['SECRET_KEY'] = "$db8384jndkJS38EXXUDE8RHDl"
 
 @app.route("/", methods=['GET', 'POST'])
 @app.route("/login", methods=['GET', 'POST'])
-@app.route("/login.html", methods=['GET', 'POST'])
-@app.route("/login.html", methods=['GET', 'POST'])
 def login():
     session.pop('_flashes', None)
     loginForm = LoginForm()
@@ -74,7 +72,6 @@ def logout():
 
 ## Rutas de proveedores ##
 @app.route("/proveedores")
-@app.route("/proveedores.html")
 def proveedores():
     proveedores = Proveedor.query.all()
     return render_template('/proveedor/index.html', proveedores=proveedores)
@@ -84,12 +81,43 @@ def productosProveedor(id):
     proveedor = Proveedor.query.get_or_404(id)
     return render_template('/proveedor/productos.html', proveedor=proveedor)
 
+@app.route("/proveedores/agregar", methods=['GET', 'POST'])
+def agregarProveedor():
+    proveedor = Proveedor()
+    personaForm = ProveedorForm(obj=proveedor)
+    if request.method == 'POST':
+        if personaForm.validate_on_submit():
+            personaForm.populate_obj(proveedor)
+            # Insert a la db
+            db.session.add(proveedor)
+            db.session.commit()
+            return redirect(url_for('proveedores'))
+    return render_template('/proveedor/agregar.html', forma = personaForm)
+
+@app.route("/proveedores/<int:id>/editar", methods=['GET', 'POST'])
+def editarProveedor(id):
+    proveedor = Proveedor.query.get_or_404(id)
+    personaForm = ProveedorForm(obj=proveedor)
+    if request.method == 'POST':
+        if personaForm.validate_on_submit():
+            personaForm.populate_obj(proveedor)
+            #Update a la db, no es necesario hacer nada mas.
+            db.session.commit()
+            return redirect(url_for('proveedores'))
+    return render_template('/proveedor/edit.html', forma = personaForm)
+
+@app.route("/proveedores/<int:id>/eliminar")
+def eliminarProveedor(id):
+    proveedor = Proveedor.query.get_or_404(id)
+    db.session.delete(proveedor)
+    db.session.commit()
+    return redirect(url_for('proveedores'))
+
 
 # ## Fin rutas proveedores ##
 
-## Rutas de usuarios ##
+## Rutas de usuarios TODO: Hacer con peticiones HTTP (JSON) ##
 @app.route("/usuarios")
-@app.route("/usuarios.html")
 def usuarios():
     return render_template('/user/index.html')
 
@@ -97,18 +125,52 @@ def usuarios():
 # ## Fin rutas de usuarios ##
 
 ## Rutas de productos ##
+
 @app.route("/productos")
-@app.route("/productos.html")
 def productos():
-    return render_template('/producto/index.html')
+    productos = Producto.query.all()
+    return render_template('/producto/index.html', productos=productos)
+
+@app.route("/productos/agregar", methods=['GET', 'POST'])
+def agregarProducto():
+    producto = Proveedor()
+    productoForm = ProductoForm(obj=producto)
+    if request.method == 'POST':
+        if productoForm.validate_on_submit():
+            productoForm.populate_obj(producto)
+            # Insert a la db
+            db.session.add(producto)
+            db.session.commit()
+            return redirect(url_for('productos'))
+    return render_template('/producto/agregar.html', forma = productoForm)
+
+@app.route("/producto/<int:id>/editar", methods=['GET', 'POST'])
+def editarProducto(id):
+    producto = Producto.query.get_or_404(id)
+    productoForm = ProductoForm(obj=producto)
+    if request.method == 'POST':
+        if productoForm.validate_on_submit():
+            productoForm.populate_obj(producto)
+            #Update a la db, no es necesario hacer nada mas.
+            db.session.commit()
+            return redirect(url_for('productos'))
+    return render_template('/producto/edit.html', forma = productoForm)
+
+@app.route("/producto/<int:id>/eliminar")
+def eliminarProducto(id):
+    producto = Producto.query.get_or_404(id)
+    db.session.delete(producto)
+    db.session.commit()
+    return redirect(url_for('productos'))
 
 
-# ## Fin rutas de usuarios ##
+
+
+# ## Fin rutas de productos ##
 
 
 ## Rutas default ##
 @app.route("/inicio")
-@app.route("/inicio.html")
 def inicio():
     return render_template('/inicio/index.html')
 
